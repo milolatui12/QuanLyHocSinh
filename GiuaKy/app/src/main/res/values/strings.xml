@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GiuaKy</string>
+    <string name="dang_nhap">Đăng nhập</string>
+    <string name="chon_lop">Chọn Lớp</string>
+</resources>
