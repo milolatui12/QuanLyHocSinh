@@ -1,5 +1,6 @@
 package com.example.giuaky;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.giuaky.entities.Lop;
+
 import java.sql.Array;
 import java.util.ArrayList;
 
@@ -17,7 +20,8 @@ public class ChonLopActivity extends AppCompatActivity {
     Button btnChon;
     ArrayAdapter<String> lopAdapter;
     ArrayList<String> lopArray = new ArrayList<>();
-    int lopInt;
+    ArrayList<Lop> data = new ArrayList<>();
+    String tenLop;
 
 
     @Override
@@ -31,10 +35,11 @@ public class ChonLopActivity extends AppCompatActivity {
 
 
     private void initData() {
-        lopArray.add("Lop1");
-        lopArray.add("Lop2");
-        lopArray.add("Lop3");
-        lopArray.add("Lop4");
+        Database database = new Database(this, "Giuaky.sqlite", null, 1);
+        data = database.getLop();
+        for(Lop l : data) {
+            lopArray.add(l.getTenLop());
+        }
     }
 
 
@@ -51,7 +56,7 @@ public class ChonLopActivity extends AppCompatActivity {
         spnLop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                lopInt = i;
+                tenLop = lopArray.get(i);
             }
 
             @Override
@@ -63,7 +68,10 @@ public class ChonLopActivity extends AppCompatActivity {
         btnChon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ChonLopActivity.this, "lop " + lopInt, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ChonLopActivity.this, DanhSachLopActivity.class);
+                intent.putExtra("tenLop", tenLop);
+                startActivity(intent);
+                Toast.makeText(ChonLopActivity.this, "lop " + tenLop, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor d = database.GetData("SELECT * FROM HocSinh");
         while(d.moveToNext()) {
             String lop = d.getString(4);
-            Toast.makeText(this, lop, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, lop, Toast.LENGTH_SHORT).show();
         }
 
         setControl();

@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GiuaKy">
         <activity
+            android:name=".ThongTinHocSinhActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DanhSachLopActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChonLopActivity"
             android:exported="false" />
         <activity
