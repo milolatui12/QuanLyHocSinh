@@ -6,14 +6,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DanhSachLopActivity">
-    <TextView
-        android:id="@+id/tvTenLop"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="100dp"
-        android:layout_gravity="center"
-        android:textSize="50dp"/>
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/btnTTBack"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/turnback_btn" />
+        <TextView
+            android:id="@+id/tvTenLop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="80dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="35dp"/>
+    </LinearLayout>
+
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="20dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -67,8 +89,17 @@
         <ListView
             android:id="@+id/lvDSHS"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="380dp"
             android:layout_marginHorizontal="15dp"
             android:background="#DAE8FC"/>
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/add_btn" />
 </LinearLayout>

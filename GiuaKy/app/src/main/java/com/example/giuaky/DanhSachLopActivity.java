@@ -2,11 +2,16 @@ package com.example.giuaky;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.service.controls.actions.FloatAction;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +27,9 @@ public class DanhSachLopActivity extends AppCompatActivity {
     ArrayList<HocSinh> data = new ArrayList<>();
     CustomAdapterHocSinh customAdapterHocSinh;
     String tenLop;
+    ImageView btnBack;
+    SearchView search;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +45,36 @@ public class DanhSachLopActivity extends AppCompatActivity {
     private void setEvent() {
         khoiTao();
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         customAdapterHocSinh = new CustomAdapterHocSinh(this, R.layout.layout_item_hocsinh, data);
         lvDSHS.setAdapter(customAdapterHocSinh);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                customAdapterHocSinh.filter(s);
+                return false;
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DanhSachLopActivity.this, ThemHocSinhActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void khoiTao() {
@@ -49,5 +85,8 @@ public class DanhSachLopActivity extends AppCompatActivity {
     private void setControl() {
         tvTenLop = findViewById(R.id.tvTenLop);
         lvDSHS = findViewById(R.id.lvDSHS);
+        btnBack = findViewById(R.id.btnTTBack);
+        search = findViewById(R.id.search);
+        fab = findViewById(R.id.fab);
     }
 }
