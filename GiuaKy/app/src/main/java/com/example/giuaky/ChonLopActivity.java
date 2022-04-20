@@ -71,7 +71,6 @@ public class ChonLopActivity extends AppCompatActivity {
                 Intent intent = new Intent(ChonLopActivity.this, DanhSachLopActivity.class);
                 intent.putExtra("tenLop", tenLop);
                 startActivity(intent);
-                Toast.makeText(ChonLopActivity.this, "lop " + tenLop, Toast.LENGTH_SHORT).show();
             }
         });
     }

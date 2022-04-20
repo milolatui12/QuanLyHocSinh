@@ -6,30 +6,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="50sp"
+    android:background="@drawable/background"
     tools:context=".ChonLopActivity">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/chon_lop"
-        android:gravity="center"
-        android:layout_marginTop="100dp"
         android:layout_gravity="center"
-        android:textSize="50dp"/>
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="@string/chon_lop"
+        android:textSize="50dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/spnLop"
-            android:layout_weight="2"/>
+            style="@style/spinner_style"
+            android:layout_weight="2" />
 
         <Button
             android:id="@+id/btnChon"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/custom_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chon"/>
+            android:text="Chon" />
     </LinearLayout>
 
 

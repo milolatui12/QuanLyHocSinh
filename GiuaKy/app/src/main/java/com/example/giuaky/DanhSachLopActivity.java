@@ -42,9 +42,13 @@ public class DanhSachLopActivity extends AppCompatActivity {
         setEvent();
     }
 
-    private void setEvent() {
+    @Override
+    protected void onStart() {
+        super.onStart();
         khoiTao();
+    }
 
+    private void setEvent() {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,8 +56,6 @@ public class DanhSachLopActivity extends AppCompatActivity {
             }
         });
 
-        customAdapterHocSinh = new CustomAdapterHocSinh(this, R.layout.layout_item_hocsinh, data);
-        lvDSHS.setAdapter(customAdapterHocSinh);
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -72,6 +74,7 @@ public class DanhSachLopActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DanhSachLopActivity.this, ThemHocSinhActivity.class);
+                intent.putExtra("tenLop", tenLop);
                 startActivity(intent);
             }
         });
@@ -79,7 +82,9 @@ public class DanhSachLopActivity extends AppCompatActivity {
 
     private void khoiTao() {
         Database database = new Database(this, "Giuaky.sqlite", null, 1);
-        data = database.getHocSinh(tenLop);
+        data = database.getHocSinhs(tenLop);
+        customAdapterHocSinh = new CustomAdapterHocSinh(this, R.layout.layout_item_hocsinh, data);
+        lvDSHS.setAdapter(customAdapterHocSinh);
     }
 
     private void setControl() {

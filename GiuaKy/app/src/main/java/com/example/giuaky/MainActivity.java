@@ -25,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
         //tao ban
         database.QueryData("CREATE TABLE IF NOT EXISTS Lop(Lop VARCHAR(200) PRIMARY KEY, Chunhiem VARCHAR(200) NOT NULL)");
         database.QueryData("CREATE TABLE IF NOT EXISTS MonHoc(MMH VARCHAR(200) PRIMARY KEY, TenMH VARCHAR(200) NOT NULL, HeSo INT NOT NULL)");
+        database.QueryData("CREATE TABLE IF NOT EXISTS Diem(" +
+                "MHS VARCHAR(200) NOT NULL," +
+                "MMH VARCHAR(200) NOT NULL," +
+                "Diem REAL NOT NULL," +
+                "PRIMARY KEY(MHS, MMH)," +
+                "FOREIGN KEY(MHS) REFERENCES HocSinh(MHS)," +
+                "FOREIGN KEY(MMH) REFERENCES MonHoc(MMH))");
         database.QueryData("CREATE TABLE IF NOT EXISTS HocSinh(MHS VARCHAR(200) PRIMARY KEY, " +
                 "Ho VARCHAR(200) NOT NULL, " +
                 "Ten VARCHAR(20) NOT NULL, " +

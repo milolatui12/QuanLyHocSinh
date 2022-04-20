@@ -3,7 +3,7 @@ package com.example.giuaky.entities;
 import java.io.Serializable;
 
 public class HocSinh implements Serializable {
-    String hoTen, gioiTinh, ngaySinh;
+    String hoTen, gioiTinh, ngaySinh, MAHS, ten, ho, lop;
 
     public HocSinh() {
     }
@@ -16,6 +16,38 @@ public class HocSinh implements Serializable {
 
     public String getHoTen() {
         return hoTen;
+    }
+
+    public String getMAHS() {
+        return MAHS;
+    }
+
+    public String getTen() {
+        return ten;
+    }
+
+    public String getHo() {
+        return ho;
+    }
+
+    public String getLop() {
+        return lop;
+    }
+
+    public void setLop(String lop) {
+        this.lop = lop;
+    }
+
+    public void setHo(String ho) {
+        this.ho = ho;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    public void setMAHS(String MAHS) {
+        this.MAHS = MAHS;
     }
 
     public void setHoTen(String hoTen) {

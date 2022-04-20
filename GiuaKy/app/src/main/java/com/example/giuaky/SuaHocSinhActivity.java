@@ -1,7 +1,6 @@
 package com.example.giuaky;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ThemHocSinhActivity extends AppCompatActivity {
+public class SuaHocSinhActivity extends AppCompatActivity {
+
     EditText txtNS, txtMAHS, txtHo, txtTen;
     Button btnDate, btnXacNhan;
     Spinner spnPhai;
@@ -30,22 +30,20 @@ public class ThemHocSinhActivity extends AppCompatActivity {
     ArrayAdapter<String> phaiAdapter;
 
     HocSinh hocSinh = new HocSinh();
-    String tenLop;
 
     final Calendar calendar = Calendar.getInstance();
-    int ngay = calendar.get(Calendar.DATE);
-    int thang = calendar.get(Calendar.MONTH);
-    int nam = calendar.get(Calendar.YEAR);
+    int ngay;
+    int thang;
+    int nam;
 
     Database database = new Database(this, "Giuaky.sqlite", null, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_them_hoc_sinh);
-        Intent intent = getIntent();
-        tenLop = intent.getStringExtra("tenLop");
+        setContentView(R.layout.activity_sua_hoc_sinh);
         setControl();
+
         setEvent();
     }
 
@@ -81,28 +79,19 @@ public class ThemHocSinhActivity extends AppCompatActivity {
             public void onClick(View view) {
                 hocSinh.setTen(txtTen.getText().toString());
                 hocSinh.setHo(txtHo.getText().toString());
-                hocSinh.setMAHS(txtMAHS.getText().toString());
+                //hocSinh.setMAHS(txtMAHS.getText().toString());
                 String ngaySinh = setNS();
                 hocSinh.setNgaySinh(ngaySinh);
-                hocSinh.setLop(tenLop);
                 if((txtMAHS.getText().toString().equals("") || txtHo.getText().toString().equals("")
                         || txtTen.getText().toString().equals("") || txtNS.getText().toString().equals(""))) {
-                    Toast.makeText(ThemHocSinhActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SuaHocSinhActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(database.insertHocSinh(hocSinh)) {
-                        Toast.makeText(ThemHocSinhActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(ThemHocSinhActivity.this, "Thêm thất bại, MHS đã tồn tại", Toast.LENGTH_SHORT).show();
-                    }
+                    database.editHocSinh(hocSinh);
+                    Toast.makeText(SuaHocSinhActivity.this, "Sửa thông tin học sinh thành công", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });
-    }
-
-    private void khoiTao() {
-        phaiArray.add("Nam");
-        phaiArray.add("Nữ");
     }
 
     private String setNS() {
@@ -126,7 +115,6 @@ public class ThemHocSinhActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        khoiTao();
         txtNS = findViewById(R.id.txtNS);
         txtMAHS = findViewById(R.id.txtMAHS);
         txtHo = findViewById(R.id.txtHo);
@@ -136,8 +124,28 @@ public class ThemHocSinhActivity extends AppCompatActivity {
         btnXacNhan = findViewById(R.id.btnXacNhan);
         btnBack = findViewById(R.id.btnBack);
 
-        phaiAdapter = new ArrayAdapter<>(ThemHocSinhActivity.this, android.R.layout.simple_list_item_1, phaiArray);
+        khoiTao();
+
+        phaiAdapter = new ArrayAdapter<>(SuaHocSinhActivity.this, android.R.layout.simple_list_item_1, phaiArray);
         spnPhai.setAdapter(phaiAdapter);
+        if(hocSinh.getGioiTinh().equals("Nam")) spnPhai.setSelection(0);
+        else spnPhai.setSelection(1);
+    }
+
+    private void khoiTao() {
+        phaiArray.add("Nam");
+        phaiArray.add("Nữ");
+        hocSinh.setMAHS(getIntent().getStringExtra("MHS"));
+        hocSinh = database.getHocSinh(hocSinh.getMAHS());
+
+        txtMAHS.setText(hocSinh.getMAHS());
+        txtHo.setText(hocSinh.getHo());
+        txtTen.setText(hocSinh.getTen());
+        txtNS.setText(hocSinh.getNgaySinh());
+        String[] ngaySinh = hocSinh.getNgaySinh().split("/");
+        ngay = Integer.parseInt(ngaySinh[0]);
+        thang = Integer.parseInt(ngaySinh[1]) - 1;
+        nam = Integer.parseInt(ngaySinh[2]);
     }
 
     private void buttonSelectDate() {

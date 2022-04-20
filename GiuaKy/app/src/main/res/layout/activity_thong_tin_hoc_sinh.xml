@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ThongTinHocSinhActivity">
     <LinearLayout
         android:layout_width="wrap_content"
@@ -79,26 +80,37 @@
             android:background="@color/teal_200"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="49dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:text="STT"
+                android:layout_weight="2"
+                android:text="Môn học"
                 android:textSize="20dp"
                 android:textStyle="bold" />
             <TextView
-                android:layout_width="154dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:text="Ho Va Ten"
+                android:layout_weight="1"
+                android:text="Điểm"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <ListView
-            android:id="@+id/lvDSHS"
+            android:id="@+id/lvDSDiem"
             android:layout_width="match_parent"
-            android:layout_height="377dp"
+            android:layout_height="365dp"
             android:background="#DAE8FC" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnNhapDiem"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="right"
+        android:background="@drawable/custom_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:text="Nhap Diem" />
 </LinearLayout>
