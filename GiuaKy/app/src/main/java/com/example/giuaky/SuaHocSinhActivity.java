@@ -1,9 +1,21 @@
 package com.example.giuaky;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,6 +23,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.giuaky.entities.HocSinh;
@@ -22,7 +35,7 @@ import java.util.Calendar;
 public class SuaHocSinhActivity extends AppCompatActivity {
 
     EditText txtNS, txtMAHS, txtHo, txtTen;
-    Button btnDate, btnXacNhan;
+    Button btnDate, btnXacNhan, btnHuy;
     Spinner spnPhai;
     ImageView btnBack;
 
@@ -86,12 +99,38 @@ public class SuaHocSinhActivity extends AppCompatActivity {
                         || txtTen.getText().toString().equals("") || txtNS.getText().toString().equals(""))) {
                     Toast.makeText(SuaHocSinhActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
                 } else {
-                    database.editHocSinh(hocSinh);
-                    Toast.makeText(SuaHocSinhActivity.this, "Sửa thông tin học sinh thành công", Toast.LENGTH_SHORT).show();
-                    finish();
+                    openConfirmDialog();
                 }
             }
         });
+
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_chung, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mnAcc:
+                Intent intent = new Intent(SuaHocSinhActivity.this, AccountActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mnThoat:
+                Intent intent1 = new Intent(SuaHocSinhActivity.this, MainActivity.class);
+                startActivity(intent1);
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private String setNS() {
@@ -122,6 +161,7 @@ public class SuaHocSinhActivity extends AppCompatActivity {
         btnDate = findViewById(R.id.btnDate);
         spnPhai = findViewById(R.id.spnPhai);
         btnXacNhan = findViewById(R.id.btnXacNhan);
+        btnHuy = findViewById(R.id.btnHuy);
         btnBack = findViewById(R.id.btnBack);
 
         khoiTao();
@@ -162,4 +202,70 @@ public class SuaHocSinhActivity extends AppCompatActivity {
         }, nam, thang, ngay);
         datePickerDialog.show();
     }
+
+    private void openConfirmDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog_confirm);
+
+        Window window = dialog.getWindow();
+        if(window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(false);
+
+        TextView tvMsg = dialog.findViewById(R.id.tvMsg);
+        tvMsg.setText("Bạn có muốn lưu thông tin");
+        Button btnOk = dialog.findViewById(R.id.btnOk);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                database.editHocSinh(hocSinh);
+                Toast.makeText(SuaHocSinhActivity.this, "Sửa thông tin học sinh thành công", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+//    private void xacNhanXoa() {
+//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+//        alertDialog.setTitle("Thong bao");
+//        alertDialog.setMessage("co muon xoa");
+//
+//        alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//            }
+//        });
+//
+//        alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//            }
+//        });
+//
+//        alertDialog.show();
+//    }
 }

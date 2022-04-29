@@ -39,16 +39,16 @@ public class MainActivity extends AppCompatActivity {
                 "NgaySinh TEXT NOT NULL, " +
                 "Lop VARCHAR(200) NOT NULL, FOREIGN KEY(Lop) REFERENCES Lop(Lop))");
         //insert
-        //database.QueryData("INSERT INTO Lop VALUES('12A2', 'Lê Văn Hiên')");
-        //database.QueryData("INSERT INTO Lop VALUES('12A3', 'Trần Huy Hoàng')");
-        //database.QueryData("INSERT INTO MonHoc VALUES('MH001', 'Toán', 3)");
-        //database.QueryData("INSERT INTO MonHoc VALUES('MH002', 'Văn', 2)");
-        //database.QueryData("INSERT INTO MonHoc VALUES('MH003', 'Anh Văn', 1)");
-        //database.QueryData("INSERT INTO HocSinh VALUES('12001', 'Nguyễn Việt', 'Hồng', 'Nam', '04/04/1996', '12A1')");
-        //database.QueryData("INSERT INTO HocSinh VALUES('12002', 'Trần Minh', 'Nguyệt', 'Nữ', '07/12/1997', '12A1')");
-        //database.QueryData("INSERT INTO HocSinh VALUES('12003', 'Trần Văn', 'Việt', 'Nam', '15/07/1997', '12A2')");
-        //database.QueryData("INSERT INTO HocSinh VALUES('12004', 'Nguyễn Bùi', 'Hoa', 'Nữ', '18/02/1997', '12A3')");
-        //database.QueryData("INSERT INTO HocSinh VALUES('12005', 'Nguyễn Minh', 'Hiếu', 'Nam', '18/02/1997', '12A3')");
+//        database.QueryData("INSERT INTO Lop VALUES('12A2', 'Lê Văn Hiên')");
+//        database.QueryData("INSERT INTO Lop VALUES('12A3', 'Trần Huy Hoàng')");
+//        database.QueryData("INSERT INTO MonHoc VALUES('MH001', 'Toán', 3)");
+//        database.QueryData("INSERT INTO MonHoc VALUES('MH002', 'Văn', 2)");
+//        database.QueryData("INSERT INTO MonHoc VALUES('MH003', 'Anh Văn', 1)");
+//        database.QueryData("INSERT INTO HocSinh VALUES('12001', 'Nguyễn Việt', 'Hồng', 'Nam', '04/04/1996', '12A1')");
+//        database.QueryData("INSERT INTO HocSinh VALUES('12002', 'Trần Minh', 'Nguyệt', 'Nữ', '07/12/1997', '12A1')");
+//        database.QueryData("INSERT INTO HocSinh VALUES('12003', 'Trần Văn', 'Việt', 'Nam', '15/07/1997', '12A2')");
+//        database.QueryData("INSERT INTO HocSinh VALUES('12004', 'Nguyễn Bùi', 'Hoa', 'Nữ', '18/02/1997', '12A3')");
+//        database.QueryData("INSERT INTO HocSinh VALUES('12005', 'Nguyễn Minh', 'Hiếu', 'Nam', '18/02/1997', '12A3')");
 
         //test select function
         Cursor d = database.GetData("SELECT * FROM HocSinh");
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Login successed", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, ChonLopActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
             }

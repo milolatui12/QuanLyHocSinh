@@ -31,11 +31,18 @@
         <Button
             android:id="@+id/btnChon"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/custom_btn"
+            android:background="@drawable/button_select_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chon" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btnThemLop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm lớp mới"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_select_3"/>
 
 </LinearLayout>

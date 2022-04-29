@@ -27,16 +27,39 @@
             android:gravity="center"
             android:layout_marginLeft="80dp"
             android:textStyle="bold"
+            android:text="12A2"
             android:layout_gravity="center"
             android:textSize="35dp"/>
+        <ImageView
+            android:id="@+id/btnEditTT"
+            android:layout_width="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:clickable="true"
+            app:srcCompat="@drawable/edit_btn" />
     </LinearLayout>
 
-    <SearchView
-        android:id="@+id/search"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginHorizontal="20dp"/>
+        android:orientation="horizontal">
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/btnPDF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_select_3"
+            android:text="Xuất pdf"/>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -63,7 +86,7 @@
                 android:layout_width="154dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
-                android:text="Ho Va Ten"
+                android:text="Họ và tên"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -72,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="3dip"
-                android:text="Phai"
+                android:text="Phái"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -83,16 +106,17 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="Ngay Sinh"
+                android:text="Ngày sinh"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <ListView
             android:id="@+id/lvDSHS"
             android:layout_width="match_parent"
-            android:layout_height="380dp"
+            android:layout_height="369dp"
             android:layout_marginHorizontal="15dp"
-            android:background="#DAE8FC"/>
+            android:background="#DAE8FC" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

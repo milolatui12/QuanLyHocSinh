@@ -37,12 +37,12 @@ public class Database extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
 
-        do {
+        while(cursor.moveToNext()) {
             Lop lop = new Lop();
             lop.setTenLop(cursor.getString(0));
             lop.setGvChuNhiem(cursor.getString(1));
             data.add(lop);
-        } while(cursor.moveToNext());
+        }
 
         return data;
     }
@@ -74,9 +74,9 @@ public class Database extends SQLiteOpenHelper {
         String sql = "SELECT * FROM HocSinh WHERE Lop = ?";
 
         Cursor cursor = database.rawQuery(sql, new String[]{lop});
-        cursor.moveToFirst();
+//        cursor.moveToFirst();
 
-        do {
+        while(cursor.moveToNext()) {
             HocSinh hocSinh = new HocSinh();
             String hoTen = cursor.getString(1) + " " + cursor.getString(2);
             hocSinh.setMAHS(cursor.getString(0));
@@ -84,7 +84,7 @@ public class Database extends SQLiteOpenHelper {
             hocSinh.setGioiTinh(cursor.getString(3));
             hocSinh.setNgaySinh(cursor.getString(4));
             data.add(hocSinh);
-        } while (cursor.moveToNext());
+        }
 
         return data;
     }
@@ -128,6 +128,16 @@ public class Database extends SQLiteOpenHelper {
 
         database.execSQL(sql, new Object[]{hocSinh.getHo(), hocSinh.getTen(), hocSinh.getGioiTinh(),
                 hocSinh.getNgaySinh(), hocSinh.getMAHS()});
+    }
+
+    public void deleteHocSinh(HocSinh hocSinh) {
+        SQLiteDatabase database = getReadableDatabase();
+
+        String delDiem = "DELETE FROM Diem WHERE MHS = ?";
+        database.execSQL(delDiem, new Object[]{hocSinh.getMAHS()});
+
+        String delHocSinh = "DELETE FROM HocSinh WHERE MHS = ?";
+        database.execSQL(delHocSinh, new Object[]{hocSinh.getMAHS()});
     }
 
     public ArrayList<Diem> getDiems(String msHS) {
@@ -181,6 +191,48 @@ public class Database extends SQLiteOpenHelper {
         String sql = "UPDATE Diem SET Diem = ? WHERE MHS = ? AND MMH = ?";
 
         database.execSQL(sql, new Object[]{diem.getDiem(), diem.getMaHS(), diem.getMaMH()});
+    }
+
+    public boolean insertLop(Lop lop) {
+        SQLiteDatabase database = getReadableDatabase();
+        String check = "SELECT * FROM Lop WHERE Lop = ?";
+        Cursor cursor = database.rawQuery(check, new String[]{lop.getTenLop()});
+        if(cursor.moveToNext()) {
+            return false;
+        } else {
+            String sql = "INSERT INTO Lop VALUES(?, ?)";
+            database.execSQL(sql, new Object[]{lop.getTenLop(), lop.getGvChuNhiem()});
+            return true;
+        }
+    }
+
+    public ArrayList<HocSinh> getPdfData(String lop) {
+        SQLiteDatabase database = getReadableDatabase();
+        ArrayList<HocSinh> data = new ArrayList<>();
+
+        String sql1 = "SELECT * FROM HocSinh WHERE Lop = ?";
+        Cursor cursor = database.rawQuery(sql1, new String[]{lop});
+        while(cursor.moveToNext()) {
+            HocSinh hocSinh = new HocSinh();
+            String hoTen = cursor.getString(1) + " " + cursor.getString(2);
+            hocSinh.setMAHS(cursor.getString(0));
+            hocSinh.setHoTen(hoTen);
+            hocSinh.setGioiTinh(cursor.getString(3));
+            hocSinh.setNgaySinh(cursor.getString(4));
+
+            String sql2 = "SELECT * FROM Diem WHERE MHS = ?";
+            Cursor cursor1 = database.rawQuery(sql2, new String[]{hocSinh.getMAHS()});
+
+            while (cursor1.moveToNext()) {
+                Diem diem = new Diem();
+                diem.setMaHS(hocSinh.getMAHS());
+                diem.setMaMH(cursor1.getString(1));
+                diem.setDiem(cursor.getFloat(2));
+                hocSinh.setDiems(diem);
+            }
+            data.add(hocSinh);
+        }
+        return data;
     }
 
     @Override

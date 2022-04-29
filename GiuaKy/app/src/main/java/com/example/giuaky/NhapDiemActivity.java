@@ -1,9 +1,18 @@
 package com.example.giuaky;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -98,7 +107,26 @@ public class NhapDiemActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_chung, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mnAcc:
+                Intent intent = new Intent(NhapDiemActivity.this, AccountActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mnThoat:
+                Intent intent1 = new Intent(NhapDiemActivity.this, MainActivity.class);
+                startActivity(intent1);
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void setControl() {
         initData();
@@ -121,5 +149,50 @@ public class NhapDiemActivity extends AppCompatActivity {
         tvTenHS.setText(hocSinh.getHoTen());
         tvPhaiHS.setText(hocSinh.getGioiTinh());
         tvNSHS.setText(hocSinh.getNgaySinh());
+    }
+
+    private void openConfirmDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog_confirm);
+
+        Window window = dialog.getWindow();
+        if(window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(false);
+
+        TextView tvMsg = dialog.findViewById(R.id.tvMsg);
+        tvMsg.setText("Bạn có muốn lưu thông tin");
+        Button btnOk = dialog.findViewById(R.id.btnOk);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                database.editDiem(diem);
+                Toast.makeText(NhapDiemActivity.this, "Sửa điểm thành công", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

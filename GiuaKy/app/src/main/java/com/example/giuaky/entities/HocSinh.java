@@ -1,9 +1,11 @@
 package com.example.giuaky.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class HocSinh implements Serializable {
     String hoTen, gioiTinh, ngaySinh, MAHS, ten, ho, lop;
+    ArrayList<Diem> diems = new ArrayList<>();
 
     public HocSinh() {
     }
@@ -12,6 +14,14 @@ public class HocSinh implements Serializable {
         this.hoTen = hoTen;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
+    }
+
+    public ArrayList<Diem> getDiems() {
+        return diems;
+    }
+
+    public void setDiems(Diem diem) {
+        this.diems.add(diem);
     }
 
     public String getHoTen() {

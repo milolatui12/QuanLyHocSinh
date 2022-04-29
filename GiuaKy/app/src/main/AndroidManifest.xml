@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GiuaKy">
         <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ThemLopActivity"
+            android:exported="false" />
+        <activity
             android:name=".SuaHocSinhActivity"
             android:exported="false" />
         <activity
